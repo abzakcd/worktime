@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>דיווח כניסה/יציאה</h1>
+<form id="attendanceForm">
+    <label for="employeeSelect">בחר עובד:</label>
+    <select id="employeeSelect" name="employeeID">
+        <option value="1">עובד 1</option>
+        <option value="2">עובד 2</option>
+        <!-- הוסף אפשרויות לעובדים נוספים -->
+    </select><br><br>
+
+    <label for="entryTime">זמן כניסה:</label>
+    <input type="datetime-local" id="entryTime" name="entryTime"><br><br>
+
+    <label for="exitTime">זמן יציאה:</label>
+    <input type="datetime-local" id="exitTime" name="exitTime"><br><br>
+
+    <input type="submit" value="שמור דיווח">
+</form>
+
+<script>
+    document.getElementById("attendanceForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch("save_attendance.php", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // אפשר לנקות את הטופס אם השמירה הצליחה
+                if (data.success) {
+                    this.reset();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("שגיאה בשמירת הדיווח");
+            });
+    });
+</script>
+</body>
+</html>

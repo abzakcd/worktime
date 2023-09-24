@@ -22,7 +22,8 @@ app.use('/', fe_rtr);
 const emp_rtr = require('./routes/employees_R');
 app.use('/employees', emp_rtr);
 
-
+const time_clock_rtr = require('./routes/time_clock');
+app.use('/time_clock', time_clock_rtr);
 
 app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
     console.log(`Now listening on port http://localhost:${port}`);
